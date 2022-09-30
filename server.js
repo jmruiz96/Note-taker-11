@@ -54,13 +54,27 @@ app.post('/api/notes', (req, res) => {
 // }
 // }
 // this was not working- scrapped 
-app.delete('/api/notes/:id', (req, res) => {
-    noteId = JSON.parse(req.params.id);
-    readFromFile('./db/db.json').then((data)=> res.json(JSON.parse(data)));
-    notes.JSONparse(notes)
-    notes = notes.filter(val => val.id !== noteId)
-    writeToFile('./db/db.json').then((data)=> res.json(JSON.parse(data)));
-  })
+// app.delete('/api/notes/:id', (req, res) => {
+//     noteId = JSON.parse(req.params.id);
+//     readFromFile('./db/db.json').then((data)=> res.json(JSON.parse(data)));
+//     notes.JSONparse(notes)
+//     notes = notes.filter(val => val.id !== noteId)
+//     writeToFile('./db/db.json').then((data)=> res.json(JSON.parse(data)));
+//   })
+app.delete('/api/notes/:id', (req, res)=>{
+    let noteid =req.params.id;
+    // get all data from notes.db
+    readFromFile('./db/db.json').then((data)=> {
+        console.log('request for the notes data')
+        return res.json(JSON.parse(data));
+    })
+  // filter out the clicked note to the id 
+  
+  // remove selected object with the same id
+  // restore all the notes data to notes.json 
+  // send response to front-end  
+    res.json('this route is incomplete');
+})
 
 
 app.listen(PORT, ()=>
