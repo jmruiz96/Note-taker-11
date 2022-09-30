@@ -62,20 +62,25 @@ app.post('/api/notes', (req, res) => {
 //     writeToFile('./db/db.json').then((data)=> res.json(JSON.parse(data)));
 //   })
 app.delete('/api/notes/:id', (req, res)=>{
-    let noteid =req.params.id;
+    let noteId =req.params.id;
     // get all data from notes.db
-    readFromFile('./db/db.json').then((data)=> {
-        console.log('request for the notes data')
-        return res.json(JSON.parse(data));
-    })
+    readFromFile('./db/db.json')
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+
+      const note = JSON.stringify(json);
+
   // filter out the clicked note to the id 
-  
   // remove selected object with the same id
+  const result = json.filter((note) => note.id !== noteId);
+
   // restore all the notes data to notes.json 
+  writeToFile('./db/db.json', result);
+
   // send response to front-end  
     res.json('this route is incomplete');
-})
-
+        })
+    })
 
 app.listen(PORT, ()=>
 console.log(`App listening at http://localhost:${PORT}`)
