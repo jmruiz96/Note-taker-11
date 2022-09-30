@@ -11,9 +11,11 @@ app.use(express.static('public'));
 
 app.get('/notes', (req, res)=>
     res.sendFile(path.join(__dirname, '/public/notes.html'))
+    //had these routes wrong went to db file instead of html
 );
 app.get('/', (req, res) => {
     readFromFile('/public/index.html').then((data) => res.json(JSON.parse(data)))
+    //this one too ^^
 });
 
 app.get('/api/notes', (req, res)=> {
@@ -28,7 +30,7 @@ app.post('/api/notes', (req, res) => {
             title,
             text,
         };
-        fs.readAndAppend(newNote, './db/feedback.json');
+        readAndAppend(newNote, './db/db.json');
         const response = {
             status: 'success',
             body: newNote
@@ -40,6 +42,8 @@ app.post('/api/notes', (req, res) => {
         res.json('Error in posting note')
     }
 });
+
+
 
 app.listen(PORT, ()=>
 console.log(`App listening at http://localhost:${PORT}`)
