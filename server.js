@@ -14,12 +14,15 @@ app.get('/notes', (req, res)=>
     //had these routes wrong went to db file instead of html
 );
 app.get('/', (req, res) => {
-    readFromFile('/public/index.html').then((data) => res.json(JSON.parse(data)))
+    res.sendFile(path.join(__dirname, '/public/index.html'))
     //this one too ^^
 });
 
 app.get('/api/notes', (req, res)=> {
-    readFromFile('./db/db.json').then((data)=> res.json(JSON.parse(data)))
+    readFromFile('./db/db.json').then((data)=> {
+        console.log('request for the notes data')
+        return res.json(JSON.parse(data));
+    })
 });
 
 app.post('/api/notes', (req, res) => {
